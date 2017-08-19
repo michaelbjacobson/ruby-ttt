@@ -1,5 +1,3 @@
-require_relative './colouriser.rb'
-
 # This is the game board
 class Board
   attr_accessor :tiles, :symbols, :width
@@ -8,10 +6,6 @@ class Board
     @width = width
     @tiles = Array.new((width * width), ' ')
     @symbols = []
-  end
-
-  def tile(index)
-    won? && winning_set.include?(index) ? @tiles[index].red : @tiles[index]
   end
 
   def available_tiles

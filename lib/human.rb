@@ -3,7 +3,7 @@ require_relative './player.rb'
 # This is the human player
 class Human < Player
   def make_move(board)
-    choice = $stdin.gets
+    choice = gets
     if board.available_tiles.include?(choice.chomp.to_i)
       board.update(choice.chomp.to_i)
     else
@@ -11,4 +11,7 @@ class Human < Player
       make_move(board)
     end
   end
+
+  # def move(board)
+  # end
 end
