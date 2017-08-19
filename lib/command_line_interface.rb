@@ -38,6 +38,10 @@ class Interface
     puts player.ai? ? computer_message : human_message
   end
 
+  def tile_is_occupied
+    puts "\nThe tile you selected is not available. Please make another move!"
+  end
+
   private
 
   def players_are_both_computers?

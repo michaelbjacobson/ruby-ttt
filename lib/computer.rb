@@ -12,8 +12,8 @@ class Computer < Player
     true
   end
 
-  def make_move(board)
-    board.update(choose_move(board))
+  def move(board)
+    choose_move(board).to_i
   end
 
   private
