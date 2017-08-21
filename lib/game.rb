@@ -2,7 +2,7 @@ require_relative './board.rb'
 require_relative './computer.rb'
 require_relative './human.rb'
 
-# This is the game engine
+# This is the command line interface for the game
 class Game
   attr_accessor :players, :board
 
@@ -24,12 +24,12 @@ class Game
 
   def start
     until @board.over?
-      @board.display
+      display(@board)
       puts player_message
       active_player.make_move(@board)
       switch_turns unless @board.won?
     end
-    @board.display
+    display(@board)
     puts game_over_message
   end
 
@@ -120,6 +120,46 @@ class Game
     symbols = %w[X O].shuffle!
     @players.first.symbol = symbols.pop
     @players.last.symbol = symbols.pop
+  end
+
+  def display(board)
+    @board = board
+    build_display
+    puts "\n"
+    @display.each { |line| puts line }
+    puts "\n"
+  end
+
+  def build_display
+    @counter = 0
+    @display = Array.new((@board.width + (@board.width - 1)), '')
+    @display.each_index do |index|
+      even(index) if index.even?
+      odd(index) if index.odd?
+    end
+  end
+
+  def even(index)
+    line = " #{tile(@counter)} "
+    @counter += 1
+    (@board.width - 1).times do
+      line << "| #{tile(@counter)} "
+      @counter += 1
+    end
+    @display[index] = line
+  end
+
+  def odd(index)
+    line = '---'
+    (@board.width - 1).times do
+      line << '+---'
+    end
+    @display[index] = line
+  end
+
+  def tile(index)
+    tile = @board.tiles[index]
+    @board.won? && @board.winning_set.include?(index) ? tile.red : tile
   end
 end
 
