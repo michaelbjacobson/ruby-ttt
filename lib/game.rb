@@ -1,49 +1,54 @@
 require_relative './board.rb'
 require_relative './computer.rb'
 require_relative './human.rb'
+require_relative './ui.rb'
 
 # This is the command line interface for the game
 class Game
   attr_accessor :players, :board
 
+  def initialize
+    @ui = UI.new
+  end
+
   def self.play
-    puts "\nLet's play Tic-Tac-Toe!\n\n"
-    game = new
+    game = Game.new
     game.setup
     game.start
     game
   end
 
   def setup
+    @ui.send("\nLet's play Tic-Tac-Toe!\n\n")
     @players = choose_game_type
-    @board = Board.new(board_size)
     players_are_both_computers? ? assign_symbols_to_computers : select_player_symbols
     select_first_player unless players_are_both_computers?
+    @board = Board.new(board_size)
     @board.symbols = [@players.first.symbol, @players.last.symbol]
   end
 
   def start
     until @board.over?
       display(@board)
-      puts player_message
-      active_player.make_move(@board)
+      @ui.send(player_message)
+      make_move
       switch_turns unless @board.won?
     end
     display(@board)
-    puts game_over_message
+    @ui.send(game_over_message)
   end
 
   private
 
   def board_size
-    puts "\nWould you like to play on a (S)tandard board or a (L)arge one?"
-    choice = $stdin.gets
+    @ui.send("\nWould you like to play on a (S)tandard board or a (L)arge one?")
+    choice = @ui.receive
     if choice.chomp =~ /\b(s|standard)\b/i
       3
     elsif choice.chomp =~ /\b(l|large)\b/i
       4
     else
-      puts "Please enter 's' (standard), or 'l' (large)..."
+      @ui.send("Please enter 's' (standard), or 'l' (large)...")
       board_size
     end
   end
@@ -69,13 +74,42 @@ class Game
   end
 
   def choose_game_type
-    puts game_types
-    choice = $stdin.gets
+    @ui.send(game_types)
+    choice = @ui.receive
     choice.chomp!
     return [Human.new, Computer.new] if choice == '1'
     return [Human.new, Human.new] if choice == '2'
     return [Computer.new, Computer.new] if choice == '3'
     choose_game_type
+  end
+
+  def valid_choice?(tile)
+    tile.length == 1 && tile =~ /[0-8]/
+  end
+
+  def tile_is_free?(tile)
+    @board.tiles[tile.to_i] !~ /[xo]/i
+  end
+
+  def print_invalid_choice_message
+    @ui.send("\nPlease enter a number between 0 and 8.")
+  end
+
+  def print_tile_is_not_free
+    @ui.send("\nThe tile you selected is not available. Please make another move!")
+  end
+
+  def make_move
+    choice = active_player.choose_move(@board)
+    if valid_choice?(choice) && tile_is_free?(choice)
+      @board.update(choice)
+    elsif !valid_choice?(choice)
+      print_invalid_choice_message
+      make_move
+    elsif !tile_is_free?(choice)
+      print_tile_is_not_free
+      make_move
+    end
   end
 
   def active_player
@@ -87,26 +121,26 @@ class Game
   end
 
   def select_player_symbols
-    puts "\nWhich symbol would you like to play with? X or O?"
-    choice = $stdin.gets
+    @ui.send("\nWhich symbol would you like to play with? X or O?")
+    choice = @ui.receive
     if choice.chomp =~ /[xo]/i
       @players.first.symbol = choice.chomp.upcase
       @players.last.symbol = 'XO'.delete!(choice.upcase)
     else
-      puts "Please enter either 'X' or 'O'..."
+      @ui.send("Please enter either 'X' or 'O'...")
       select_player_symbols
     end
   end
 
   def select_first_player
-    puts "\nWould you like to go first? (Y)es or (N)o?"
-    choice = $stdin.gets
+    @ui.send("\nWould you like to go first? (Y)es or (N)o?")
+    choice = @ui.receive
     return if choice.chomp =~ /\b(y|yes)\b/i
     if choice.chomp =~ /\b(n|no)\b/i
       @board.symbols.rotate!
       switch_turns
     else
-      puts "Please enter 'y' (yes), or 'n' (no)..."
+      @ui.send("Please enter 'y' (yes), or 'n' (no)...")
       select_first_player
     end
   end
@@ -125,9 +159,9 @@ class Game
   def display(board)
     @board = board
     build_display
-    puts "\n"
-    @display.each { |line| puts line }
-    puts "\n"
+    @ui.send("\n")
+    @display.each { |line| @ui.send(line) }
+    @ui.send("\n")
   end
 
   def build_display
@@ -158,8 +192,15 @@ class Game
   end
 
   def tile(index)
-    tile = @board.tiles[index]
-    @board.won? && @board.winning_set.include?(index) ? tile.red : tile
+    tile = @board.tiles[index].to_s
+    # @board.won? && @board.winning_set.include?(index) ? tile.red : tile
+    if @board.won? && @board.winning_set.include?(index)
+      tile.red
+    elsif tile =~ /[xo]/i
+      tile.cyan
+    else
+      tile
+    end
   end
 end
 
