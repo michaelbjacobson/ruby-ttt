@@ -19,6 +19,7 @@ class Game
   end
 
   def setup
+    clear_screen
     @ui.out("\nLet's play Tic-Tac-Toe!\n\n")
     @players = choose_game_type
     players_are_both_computers? ? assign_symbols_to_computers : select_player_symbols
@@ -28,11 +29,13 @@ class Game
   end
 
   def start
+    clear_screen
     until @board.over?
       display(@board)
       @ui.out(player_message)
       make_move
       switch_turns unless @board.won?
+      clear_screen
     end
     display(@board)
     @ui.out(game_over_message)
@@ -84,7 +87,11 @@ class Game
   end
 
   def valid_choice?(tile)
-    tile.length == 1 && tile =~ /[0-8]/
+    if @board.width == 3
+      tile.to_i >= 0 && tile.to_i < 9
+    elsif @board.width == 4
+      tile.to_i >= 0 && tile.to_i < 16
+    end
   end
 
   def tile_is_free?(tile)
@@ -92,7 +99,7 @@ class Game
   end
 
   def print_invalid_choice_message
-    @ui.out("\nPlease enter a number between 0 and 8.")
+    @ui.out("\nPlease enter a number between 0 and #{(@board.width * @board.width) - 1}.")
   end
 
   def print_tile_is_not_free
@@ -173,34 +180,39 @@ class Game
   end
 
   def even(index)
-    line = " #{tile(@counter)} "
+    line = "#{tile(@counter)} "
     @counter += 1
     (@board.width - 1).times do
-      line << "| #{tile(@counter)} "
+      line << "|#{tile(@counter)} "
       @counter += 1
     end
     @display[index] = line
   end
 
   def odd(index)
-    line = '---'
+    line = @board.width == 3 ? '---' : '----'
     (@board.width - 1).times do
-      line << '+---'
+      line << '+---' if @board.width == 3
+      line << '+----' if @board.width != 3
     end
     @display[index] = line
   end
 
   def tile(index)
     tile = @board.tiles[index].to_s
-    # @board.won? && @board.winning_set.include?(index) ? tile.red : tile
     if @board.won? && @board.winning_set.include?(index)
-      tile.red
+      tile.length > 1 ? " #{tile.red}" : "  #{tile.red}"
     elsif tile =~ /[xo]/i
-      tile.cyan
+      tile.length > 1 ? " #{tile.cyan}" : "  #{tile.cyan}"
     else
-      tile
+      tile.length > 1 ? " #{tile}" : "  #{tile}"
     end
   end
+
+  def clear_screen
+    system 'clear'
+  end
+
 end
 
 Game.play if $PROGRAM_NAME == __FILE__
