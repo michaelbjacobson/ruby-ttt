@@ -1,9 +1,9 @@
 class UI
-  def send(message, output: $stdout)
+  def out(message, output: $stdout)
     output.puts message
   end
 
-  def receive(input: $stdin)
+  def in(input: $stdin)
     input.gets.chomp
   end
 end

@@ -19,7 +19,7 @@ class Game
   end
 
   def setup
-    @ui.send("\nLet's play Tic-Tac-Toe!\n\n")
+    @ui.out("\nLet's play Tic-Tac-Toe!\n\n")
     @players = choose_game_type
     players_are_both_computers? ? assign_symbols_to_computers : select_player_symbols
     select_first_player unless players_are_both_computers?
@@ -30,25 +30,25 @@ class Game
   def start
     until @board.over?
       display(@board)
-      @ui.send(player_message)
+      @ui.out(player_message)
       make_move
       switch_turns unless @board.won?
     end
     display(@board)
-    @ui.send(game_over_message)
+    @ui.out(game_over_message)
   end
 
   private
 
   def board_size
-    @ui.send("\nWould you like to play on a (S)tandard board or a (L)arge one?")
-    choice = @ui.receive
+    @ui.out("\nWould you like to play on a (S)tandard board or a (L)arge one?")
+    choice = @ui.in
     if choice.chomp =~ /\b(s|standard)\b/i
       3
     elsif choice.chomp =~ /\b(l|large)\b/i
       4
     else
-      @ui.send("Please enter 's' (standard), or 'l' (large)...")
+      @ui.out("Please enter 's' (standard), or 'l' (large)...")
       board_size
     end
   end
@@ -74,8 +74,8 @@ class Game
   end
 
   def choose_game_type
-    @ui.send(game_types)
-    choice = @ui.receive
+    @ui.out(game_types)
+    choice = @ui.in
     choice.chomp!
     return [Human.new, Computer.new] if choice == '1'
     return [Human.new, Human.new] if choice == '2'
@@ -92,11 +92,11 @@ class Game
   end
 
   def print_invalid_choice_message
-    @ui.send("\nPlease enter a number between 0 and 8.")
+    @ui.out("\nPlease enter a number between 0 and 8.")
   end
 
   def print_tile_is_not_free
-    @ui.send("\nThe tile you selected is not available. Please make another move!")
+    @ui.out("\nThe tile you selected is not available. Please make another move!")
   end
 
   def make_move
@@ -121,26 +121,25 @@ class Game
   end
 
   def select_player_symbols
-    @ui.send("\nWhich symbol would you like to play with? X or O?")
-    choice = @ui.receive
+    @ui.out("\nWhich symbol would you like to play with? X or O?")
+    choice = @ui.in
     if choice.chomp =~ /[xo]/i
       @players.first.symbol = choice.chomp.upcase
       @players.last.symbol = 'XO'.delete!(choice.upcase)
     else
-      @ui.send("Please enter either 'X' or 'O'...")
+      @ui.out("Please enter either 'X' or 'O'...")
       select_player_symbols
     end
   end
 
   def select_first_player
-    @ui.send("\nWould you like to go first? (Y)es or (N)o?")
-    choice = @ui.receive
+    @ui.out("\nWould you like to go first? (Y)es or (N)o?")
+    choice = @ui.in
     return if choice.chomp =~ /\b(y|yes)\b/i
     if choice.chomp =~ /\b(n|no)\b/i
-      @board.symbols.rotate!
       switch_turns
     else
-      @ui.send("Please enter 'y' (yes), or 'n' (no)...")
+      @ui.out("Please enter 'y' (yes), or 'n' (no)...")
       select_first_player
     end
   end
@@ -159,9 +158,9 @@ class Game
   def display(board)
     @board = board
     build_display
-    @ui.send("\n")
-    @display.each { |line| @ui.send(line) }
-    @ui.send("\n")
+    @ui.out("\n")
+    @display.each { |line| @ui.out(line) }
+    @ui.out("\n")
   end
 
   def build_display
