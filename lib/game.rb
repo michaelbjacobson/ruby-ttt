@@ -19,7 +19,7 @@ class Game
   end
 
   def setup
-    clear_screen
+    clear_display
     @ui.out("\nLet's play Tic-Tac-Toe!\n\n")
     @players = choose_game_type
     players_are_both_computers? ? assign_symbols_to_computers : select_player_symbols
@@ -29,13 +29,13 @@ class Game
   end
 
   def start
-    clear_screen
+    clear_display
     until @board.over?
       display(@board)
       @ui.out(player_message)
       make_move
       switch_turns unless @board.won?
-      clear_screen
+      clear_display
     end
     display(@board)
     @ui.out(game_over_message)
@@ -87,11 +87,7 @@ class Game
   end
 
   def valid_choice?(tile)
-    if @board.width == 3
-      tile.to_i >= 0 && tile.to_i < 9
-    elsif @board.width == 4
-      tile.to_i >= 0 && tile.to_i < 16
-    end
+    tile.to_i >= 0 && tile.to_i < (@board.width * @board.width)
   end
 
   def tile_is_free?(tile)
@@ -99,7 +95,7 @@ class Game
   end
 
   def print_invalid_choice_message
-    @ui.out("\nPlease enter a number between 0 and #{(@board.width * @board.width) - 1}.")
+    @ui.out("\nPlease enter a number between 0 and #{((@board.width * @board.width) - 1)}.")
   end
 
   def print_tile_is_not_free
@@ -198,18 +194,28 @@ class Game
     @display[index] = line
   end
 
-  def tile(index)
+  def tile(index) # TODO: refactor this method!
     tile = @board.tiles[index].to_s
-    if @board.won? && @board.winning_set.include?(index)
-      tile.length > 1 ? " #{tile.red}" : "  #{tile.red}"
-    elsif tile =~ /[xo]/i
-      tile.length > 1 ? " #{tile.cyan}" : "  #{tile.cyan}"
-    else
-      tile.length > 1 ? " #{tile}" : "  #{tile}"
+    if @board.width == 3
+      if @board.won? && @board.winning_set.include?(index)
+        " #{tile.red}"
+      elsif tile =~ /[xo]/i
+        " #{tile.cyan}"
+      else
+        " #{tile}"
+      end
+    elsif @board.width == 4
+      if @board.won? && @board.winning_set.include?(index)
+        tile.length > 1 ? " #{tile.red}" : "  #{tile.red}"
+      elsif tile =~ /[xo]/i
+        tile.length > 1 ? " #{tile.cyan}" : "  #{tile.cyan}"
+      else
+        tile.length > 1 ? " #{tile}" : "  #{tile}"
+      end
     end
   end
 
-  def clear_screen
+  def clear_display
     system 'clear'
   end
 
