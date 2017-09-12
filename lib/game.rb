@@ -87,7 +87,7 @@ class Game
   end
 
   def valid_choice?(tile)
-    tile.to_i >= 0 && tile.to_i < (@board.width * @board.width)
+    tile =~ /^[0-9]*$/ && tile.to_i >= 0 && tile.to_i < (@board.width * @board.width)
   end
 
   def tile_is_free?(tile)

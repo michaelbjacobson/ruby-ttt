@@ -6,7 +6,6 @@ class Board
 
   def initialize(width = 3)
     @width = width
-    # @tiles = Array.new((width * width), ' ')
     @tiles = [*0...(width * width)]
     @symbols = []
   end
