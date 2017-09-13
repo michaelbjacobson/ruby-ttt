@@ -1,5 +1,3 @@
-require_relative './colouriser.rb'
-
 # This is the game board
 class Board
   attr_accessor :tiles, :symbols, :width
