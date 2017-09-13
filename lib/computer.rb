@@ -28,19 +28,19 @@ class Computer < Player
   def negamax(board, depth = MINIMUM_DEPTH, alpha = -MAXIMUM_SCORE, beta = MAXIMUM_SCORE, color = 1, max_depth = MAXIMUM_DEPTH)
     return color * heuristic_value(board, depth) if board.over? || depth > max_depth
 
-    max = -MAXIMUM_SCORE
+    maximum = -MAXIMUM_SCORE
 
     board.available_tiles.each do |space|
       board.update(space)
       negamax_value = -negamax(board, depth + 1, -beta, -alpha, -color)
       board.reset(space)
-      max = [max, negamax_value].max
+      max = [maximum, negamax_value].max
       @best_score[space] = max if depth == MINIMUM_DEPTH
       alpha = [alpha, negamax_value].max
       return alpha if alpha >= beta
     end
 
-    max
+    maximum
   end
 
   def opening_gambit(board)
