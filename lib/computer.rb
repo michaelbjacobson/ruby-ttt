@@ -12,16 +12,12 @@ class Computer < Player
     true
   end
 
-  def move(board)
-    choose_move(board).to_i
+  def choose_move(board)
+    return opening_gambit(board).to_s if board.empty?
+    select_best_space(board).to_s
   end
 
   private
-
-  def choose_move(board)
-    return opening_gambit(board) if board.empty?
-    select_best_space(board)
-  end
 
   def heuristic_value(board, depth)
     return MAXIMUM_SCORE / depth if board.won?(symbol)

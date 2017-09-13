@@ -4,20 +4,20 @@ class Board
 
   def initialize(width = 3)
     @width = width
-    @tiles = Array.new((width * width), ' ')
+    @tiles = [*0...(width * width)]
     @symbols = []
   end
 
   def available_tiles
-    @tiles.collect.with_index { |tile, index| tile == ' ' ? index : nil }.compact
+    @tiles.collect.with_index { |tile, index| tile !~ /[ox]/i ? index : nil }.compact
   end
 
   def update(tile)
-    @tiles[tile.to_i] = active_player_symbol if @tiles[tile.to_i] == ' '
+    @tiles[tile.to_i] = active_player_symbol if @tiles[tile.to_i] !~ /[ox]/i
   end
 
   def reset(tile)
-    @tiles[tile.to_i] = ' '
+    @tiles[tile.to_i] = tile.to_i
   end
 
   def over?
@@ -59,7 +59,7 @@ class Board
   end
 
   def empty?
-    @tiles.all? { |symbol| symbol == ' ' }
+    @tiles.all? { |symbol| symbol !~ /[ox]/i }
   end
 
   def full?
