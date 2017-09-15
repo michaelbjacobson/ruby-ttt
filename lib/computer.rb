@@ -5,7 +5,7 @@ class Computer < Player
   attr_reader :symbol
 
   MINIMUM_DEPTH = 0
-  MAXIMUM_DEPTH = 6
+  MAXIMUM_DEPTH = 5
   MAXIMUM_SCORE = 1000
 
   def ai?

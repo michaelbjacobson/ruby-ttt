@@ -1,5 +1,1 @@
-describe Board do
-
-
-
-end
+describe Board do; end

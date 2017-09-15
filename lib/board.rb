@@ -1,12 +1,10 @@
-require_relative './colouriser.rb'
-
 # This is the game board
 class Board
   attr_accessor :tiles, :symbols, :width
 
   def initialize(width = 3)
     @width = width
-    @tiles = [*0...(width * width)]
+    @tiles = [*1..(width * width)]
     @symbols = []
   end
 
@@ -34,7 +32,7 @@ class Board
     return unless won?
     winning_indices.each do |set|
       if set.all? { |index| @tiles[index] == @symbols.first } ||
-          set.all? { |index| @tiles[index] == @symbols.last }
+         set.all? { |index| @tiles[index] == @symbols.last }
         return set
       end
     end
@@ -51,7 +49,7 @@ class Board
     if player_symbol.nil?
       winning_indices.any? do |set|
         set.all? { |index| @tiles[index] == @symbols.first } ||
-            set.all? { |index| @tiles[index] == @symbols.last }
+          set.all? { |index| @tiles[index] == @symbols.last }
       end
     else
       winning_indices.any? do |set|
