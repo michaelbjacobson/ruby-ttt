@@ -4,16 +4,16 @@ class Board
 
   def initialize(width = 3)
     @width = width
-    @tiles = [*1..(width * width)]
-    @symbols = []
+    @tiles = [*0...(width * width)]
+    @symbols = %w[X O]
   end
 
   def available_tiles
-    @tiles.collect.with_index { |tile, index| tile !~ /[ox]/i ? index : nil }.compact
+    @tiles.collect.with_index { |tile, index| tile !~ /[#{@symbols.join}]/i ? index : nil }.compact
   end
 
   def update(tile)
-    @tiles[tile.to_i] = active_player_symbol if @tiles[tile.to_i] !~ /[ox]/i
+    @tiles[tile.to_i] = active_player_symbol unless @tiles[tile.to_i] =~ /[#{@symbols.join}]/i
   end
 
   def reset(tile)
@@ -40,9 +40,7 @@ class Board
 
   def lost?(player_symbol)
     opponent_symbol = @symbols.join.delete(player_symbol)
-    winning_indices.any? do |set|
-      set.all? { |index| @tiles[index] == opponent_symbol }
-    end
+    won?(opponent_symbol)
   end
 
   def won?(player_symbol = nil)
@@ -59,11 +57,11 @@ class Board
   end
 
   def empty?
-    @tiles.all? { |symbol| symbol !~ /[ox]/i }
+    @tiles.all? { |symbol| symbol !~ /[#{@symbols.join}]/i }
   end
 
   def full?
-    @tiles.all? { |symbol| symbol =~ /[#{@symbols.join}]/ }
+    @tiles.all? { |symbol| symbol =~ /[#{@symbols.join}]/i }
   end
 
   def active_player_symbol
@@ -71,7 +69,7 @@ class Board
   end
 
   def turn_count
-    @tiles.count { |symbol| symbol =~ /[#{@symbols.join}]/ }
+    @tiles.count { |symbol| symbol =~ /[#{@symbols.join}]/i }
   end
 
   def corners
