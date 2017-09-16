@@ -1,5 +1,3 @@
-require_relative './colouriser.rb'
-
 # This is the game board
 class Board
   attr_accessor :tiles, :symbols, :width
@@ -7,15 +5,15 @@ class Board
   def initialize(width = 3)
     @width = width
     @tiles = [*0...(width * width)]
-    @symbols = []
+    @symbols = %w[X O]
   end
 
   def available_tiles
-    @tiles.collect.with_index { |tile, index| tile !~ /[ox]/i ? index : nil }.compact
+    @tiles.collect.with_index { |tile, index| tile !~ /[#{@symbols.join}]/i ? index : nil }.compact
   end
 
   def update(tile)
-    @tiles[tile.to_i] = active_player_symbol if @tiles[tile.to_i] !~ /[ox]/i
+    @tiles[tile.to_i] = active_player_symbol unless @tiles[tile.to_i] =~ /[#{@symbols.join}]/i
   end
 
   def reset(tile)
@@ -34,7 +32,7 @@ class Board
     return unless won?
     winning_indices.each do |set|
       if set.all? { |index| @tiles[index] == @symbols.first } ||
-          set.all? { |index| @tiles[index] == @symbols.last }
+         set.all? { |index| @tiles[index] == @symbols.last }
         return set
       end
     end
@@ -42,16 +40,14 @@ class Board
 
   def lost?(player_symbol)
     opponent_symbol = @symbols.join.delete(player_symbol)
-    winning_indices.any? do |set|
-      set.all? { |index| @tiles[index] == opponent_symbol }
-    end
+    won?(opponent_symbol)
   end
 
   def won?(player_symbol = nil)
     if player_symbol.nil?
       winning_indices.any? do |set|
         set.all? { |index| @tiles[index] == @symbols.first } ||
-            set.all? { |index| @tiles[index] == @symbols.last }
+          set.all? { |index| @tiles[index] == @symbols.last }
       end
     else
       winning_indices.any? do |set|
@@ -61,11 +57,11 @@ class Board
   end
 
   def empty?
-    @tiles.all? { |symbol| symbol !~ /[ox]/i }
+    @tiles.all? { |symbol| symbol !~ /[#{@symbols.join}]/i }
   end
 
   def full?
-    @tiles.all? { |symbol| symbol =~ /[#{@symbols.join}]/ }
+    @tiles.all? { |symbol| symbol =~ /[#{@symbols.join}]/i }
   end
 
   def active_player_symbol
@@ -73,7 +69,7 @@ class Board
   end
 
   def turn_count
-    @tiles.count { |symbol| symbol =~ /[#{@symbols.join}]/ }
+    @tiles.count { |symbol| symbol =~ /[#{@symbols.join}]/i }
   end
 
   def corners

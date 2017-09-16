@@ -1,4 +1,5 @@
 require_relative './board.rb'
+require_relative './colouriser.rb'
 require_relative './computer.rb'
 require_relative './human.rb'
 require_relative './ui.rb'
@@ -46,9 +47,9 @@ class Game
   def board_size
     @ui.out("\nWould you like to play on a (S)tandard board or a (L)arge one?")
     choice = @ui.in
-    if choice.chomp =~ /\b(s|standard)\b/i
+    if choice =~ /\b(s|standard)\b/i
       3
-    elsif choice.chomp =~ /\b(l|large)\b/i
+    elsif choice =~ /\b(l|large)\b/i
       4
     else
       @ui.out("Please enter 's' (standard), or 'l' (large)...")
@@ -79,7 +80,6 @@ class Game
   def choose_game_type
     @ui.out(game_types)
     choice = @ui.in
-    choice.chomp!
     return [Human.new, Computer.new] if choice == '1'
     return [Human.new, Human.new] if choice == '2'
     return [Computer.new, Computer.new] if choice == '3'
@@ -126,8 +126,8 @@ class Game
   def select_player_symbols
     @ui.out("\nWhich symbol would you like to play with? X or O?")
     choice = @ui.in
-    if choice.chomp =~ /[xo]/i
-      @players.first.symbol = choice.chomp.upcase
+    if choice =~ /[xo]/i
+      @players.first.symbol = choice.upcase
       @players.last.symbol = 'XO'.delete!(choice.upcase)
     else
       @ui.out("Please enter either 'X' or 'O'...")
@@ -138,8 +138,8 @@ class Game
   def select_first_player
     @ui.out("\nWould you like to go first? (Y)es or (N)o?")
     choice = @ui.in
-    return if choice.chomp =~ /\b(y|yes)\b/i
-    if choice.chomp =~ /\b(n|no)\b/i
+    return if choice =~ /\b(y|yes)\b/i
+    if choice =~ /\b(n|no)\b/i
       switch_turns
     else
       @ui.out("Please enter 'y' (yes), or 'n' (no)...")
