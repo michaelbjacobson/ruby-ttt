@@ -4,7 +4,7 @@ require_relative './player.rb'
 class Human < Player
 
   def choose_move(board)
-    gets.chomp
+    @ui.in
   end
 
 end

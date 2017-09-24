@@ -210,14 +210,75 @@ describe Board do
     end
   end
 
-  describe '#winning_horizontals' do; end
+  describe '#winning_horizontals' do # it calculates the winning horizonal rows from the board width
+    context 'the board is 3 tiles wide' do
+      it 'returns an array containing the index sets of all winning horizontal rows, ie. [[0,1,2],[3,4,5],[6,7,8]]' do
+        expect(subject.winning_horizontals).to eq [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
+      end
+    end
+    context 'the board is 4 tiles wide' do
+      it 'returns an array containing the index sets of all winning horizontal rows, ie. [[0, 1, 2, 3],[4, 5, 6, 7],[8, 9, 10, 11], [12, 13, 14, 15]' do
+        large_board = Board.new(4)
+        expect(large_board.winning_horizontals).to eq [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11], [12, 13, 14, 15]]
+      end
+    end
+  end
 
-  describe '#winning_verticals' do; end
+  describe '#winning_verticals' do # it calculates the winning vertical columns from the board width
+    context 'the board is 3 tiles wide' do
+      it 'returns an array containing the index sets of all winning vertical columns, ie. [[0, 3, 6], [1, 4, 7], [2, 5, 8]]' do
+        expect(subject.winning_verticals).to eq [[0, 3, 6], [1, 4, 7], [2, 5, 8]]
+      end
+    end
+    context 'the board is 4 tiles wide' do
+      it 'returns an array containing the index sets of all winning vertical columns, ie. [[0, 4, 8, 12], [1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15]]' do
+        large_board = Board.new(4)
+        expect(large_board.winning_verticals).to eq [[0, 4, 8, 12], [1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15]]
+      end
+    end
+  end
 
-  describe '#winning_diagonals' do; end
+  describe '#winning_diagonals' do # it calculates the winning diagonal rows from the board width
+    context 'the board is 3 tiles wide' do
+      it 'returns an array containing the index sets of all winning diagonal rows, ie. [[0, 4, 8], [2, 4, 6]]' do
+        expect(subject.winning_diagonals).to eq [[0, 4, 8], [2, 4, 6]]
+      end
+    end
+    context 'the board is 4 tiles wide' do
+      it 'returns an array containing the index sets of all winning diagonal rows, ie. [[0, 5, 10, 15], [3, 6, 9, 12]]' do
+        large_board = Board.new(4)
+        expect(large_board.winning_diagonals).to eq [[0, 5, 10, 15], [3, 6, 9, 12]]
+      end
+    end
+  end
 
-  describe '#winning_indices' do; end
+  describe '#winning_indices' do # it returns all the winning rows and columns from the board width
+    context 'the board is 3 tiles wide' do
+      it 'returns an array containing the all sets of winning indices' do
+        expect(subject.winning_indices).to eq [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+      end
+    end
+    context 'the board is 4 tiles wide' do
+      it 'returns an array containing the all sets of winning indices' do
+        large_board = Board.new(4)
+        expect(large_board.winning_indices).to eq [[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11], [12, 13, 14, 15], [0, 4, 8, 12], [1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], [0, 5, 10, 15], [3, 6, 9, 12]]
+      end
+    end
+  end
 
-  describe '#winning_set' do; end
-
+  describe '#winning_set' do
+    context 'there is currently no winner' do
+      it 'returns nil' do
+        expect(subject.winning_set).to eq nil
+      end
+    end
+    context 'the game has been won' do
+      it 'returns the indices of the set used to win the game' do
+        subject.tiles[0] = 'X'
+        subject.tiles[1] = 'X'
+        subject.tiles[2] = 'X'
+        expect(subject.winning_set).to eq [0, 1, 2]
+      end
+    end
+  end
 end
