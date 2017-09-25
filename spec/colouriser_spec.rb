@@ -16,5 +16,4 @@ describe String do
       expect('Hello, World!'.cyan).to eq "\e[36mHello, World!\e[0m"
     end
   end
-
 end

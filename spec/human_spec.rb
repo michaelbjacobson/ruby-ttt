@@ -9,5 +9,4 @@ describe Human do
 
     end
   end
-
 end

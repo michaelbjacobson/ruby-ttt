@@ -5,5 +5,6 @@ describe Computer do
       expect(subject.ai?).to eq true
     end
   end
-
+  
+  describe '#opening_gambit' do;end
 end
