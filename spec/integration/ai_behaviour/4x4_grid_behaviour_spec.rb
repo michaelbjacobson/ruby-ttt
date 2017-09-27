@@ -1,4 +1,4 @@
-describe '4x4 grid AI behaviour', long: true do
+describe '4x4 grid AI behaviour', slow: true do
 
   describe 'horizontal blocking' do
     context "AI's opponent has it's symbols in tiles 0, 1 and 2" do
@@ -11,7 +11,7 @@ describe '4x4 grid AI behaviour', long: true do
         board.tiles[2] = 'X'
         ai = Computer.new
         ai.symbol = 'O'
-        expect(ai.choose_move(board)).to eq '3'
+        expect(ai.choose_move(board, :ui)).to eq '3'
       end
     end
 
@@ -25,7 +25,7 @@ describe '4x4 grid AI behaviour', long: true do
         board.tiles[11] = 'X'
         ai = Computer.new
         ai.symbol = 'O'
-        expect(ai.choose_move(board)).to eq '9'
+        expect(ai.choose_move(board, :ui)).to eq '9'
       end
     end
   end
@@ -41,7 +41,7 @@ describe '4x4 grid AI behaviour', long: true do
         board.tiles[13] = 'X'
         ai = Computer.new
         ai.symbol = 'O'
-        expect(ai.choose_move(board)).to eq '5'
+        expect(ai.choose_move(board, :ui)).to eq '5'
       end
     end
 
@@ -55,7 +55,7 @@ describe '4x4 grid AI behaviour', long: true do
         board.tiles[15] = 'X'
         ai = Computer.new
         ai.symbol = 'O'
-        expect(ai.choose_move(board)).to eq '3'
+        expect(ai.choose_move(board, :ui)).to eq '3'
       end
     end
   end
@@ -71,7 +71,7 @@ describe '4x4 grid AI behaviour', long: true do
         board.tiles[15] = 'X'
         ai = Computer.new
         ai.symbol = 'O'
-        expect(ai.choose_move(board)).to eq '5'
+        expect(ai.choose_move(board, :ui)).to eq '5'
       end
     end
 
@@ -85,7 +85,7 @@ describe '4x4 grid AI behaviour', long: true do
         board.tiles[9] = 'X'
         ai = Computer.new
         ai.symbol = 'O'
-        expect(ai.choose_move(board)).to eq '12'
+        expect(ai.choose_move(board, :ui)).to eq '12'
       end
     end
   end
@@ -101,7 +101,7 @@ describe '4x4 grid AI behaviour', long: true do
         board.tiles[2] = 'O'
         ai = Computer.new
         ai.symbol = 'O'
-        expect(ai.choose_move(board)).to eq '3'
+        expect(ai.choose_move(board, :ui)).to eq '3'
       end
     end
 
@@ -115,7 +115,7 @@ describe '4x4 grid AI behaviour', long: true do
         board.tiles[11] = 'O'
         ai = Computer.new
         ai.symbol = 'O'
-        expect(ai.choose_move(board)).to eq '9'
+        expect(ai.choose_move(board, :ui)).to eq '9'
       end
     end
   end
@@ -131,7 +131,7 @@ describe '4x4 grid AI behaviour', long: true do
         board.tiles[13] = 'O'
         ai = Computer.new
         ai.symbol = 'O'
-        expect(ai.choose_move(board)).to eq '5'
+        expect(ai.choose_move(board, :ui)).to eq '5'
       end
     end
 
@@ -145,7 +145,7 @@ describe '4x4 grid AI behaviour', long: true do
         board.tiles[15] = 'O'
         ai = Computer.new
         ai.symbol = 'O'
-        expect(ai.choose_move(board)).to eq '3'
+        expect(ai.choose_move(board, :ui)).to eq '3'
       end
     end
   end
@@ -161,7 +161,7 @@ describe '4x4 grid AI behaviour', long: true do
         board.tiles[15] = 'O'
         ai = Computer.new
         ai.symbol = 'O'
-        expect(ai.choose_move(board)).to eq '5'
+        expect(ai.choose_move(board, :ui)).to eq '5'
       end
     end
 
@@ -175,7 +175,7 @@ describe '4x4 grid AI behaviour', long: true do
         board.tiles[9] = 'O'
         ai = Computer.new
         ai.symbol = 'O'
-        expect(ai.choose_move(board)).to eq '12'
+        expect(ai.choose_move(board, :ui)).to eq '12'
       end
     end
   end

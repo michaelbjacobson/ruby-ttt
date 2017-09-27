@@ -8,12 +8,12 @@ require_relative './ui.rb'
 class Game
   attr_accessor :players, :board
 
-  def initialize
-    @ui = UI.new
+  def initialize(input, output)
+    @ui = UI.new(input, output)
   end
 
-  def self.play
-    game = Game.new
+  def self.play(input: $stdin, output: $stdout)
+    game = Game.new(input, output)
     game.setup
     game.start
     game
@@ -103,7 +103,7 @@ class Game
   end
 
   def make_move
-    choice = active_player.choose_move(@board)
+    choice = active_player.choose_move(@board, @ui)
     if valid_choice?(choice) && tile_is_free?(choice)
       @board.update(choice)
     elsif !valid_choice?(choice)

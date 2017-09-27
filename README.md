@@ -13,22 +13,22 @@ the selected game mode.
 #### Ace! How can I play it it?
 Good question. Just follow these simple steps:
 1. Clone [this](https://github.com/michaelbjacobson/tic-tac-toe.git) GitHub repo onto your machine
-2. Using your terminal, navigate to the lib directory inside the main Tic-Tac-Toe
-directory eg. `$ cd ~/desktop/tic-tac-toe/lib`
-3. Once inside Tic-Tac-Toe's lib directory simply enter `$ ruby game.rb`
-4. Enjoy the game! If, for whatever reason, you'd like to finish the game early, simply type 'ctrl + c'
+2. Using your terminal, navigate into the main Tic-Tac-Toe directory eg. `$ cd ~/tic-tac-toe`
+3. Once inside Tic-Tac-Toe's main directory run the `$ bundle` command to gather the necessary dependencies
+4. Next, navigate into Tic-Tac-Toe's lib directory by entering the following command `$ cd lib`
+5. Finally, simply enter `$ ruby game.rb` and away you go!
+6. Enjoy the game! If, for whatever reason, you'd like to finish the game early, simply type 'ctrl + c'
 into your terminal.
 
 #### Great, is there anything else I should know?
-Yes. First off, the computer player is _unbeatable_. I'm not kidding, it literally can't be beaten. If you
+Yes. The computer player is _unbeatable_. I'm not kidding, it literally can't be beaten. If you
 play against the computer you'll either draw or lose. If you don't believe me, give it a try. I dare you.
 
-Secondly, while you're playing, you'll see two grids. The grid on the left is your game board and starts out empty,
-the grid on the right is a key. Check on your game board which tile you'd like to use and then consult the handy
-key for the tile's number.
 #
 
 ### My Process
+
+##### Part One
 I began by dissecting and refactoring the original codebase. The very first step of this was tweaking the original
 script to make it fully compliant with the [Ruby Style Guide](https://github.com/bbatsov/ruby-style-guide). Next I
 trimmed out a lot of redundant code in several methods. Finally I extracted several classes from the one existing
@@ -54,8 +54,11 @@ Next I implemented the additional functionality requested in the original brief,
 select the game mode, their symbol, and which player should make the first move.
 
 It goes without saying that I test-drove the development of the original refactor, the class extraction and also the
-implementation of new functionality. I used the Rspec testing framework with the Simplecov gem to monitor test
+implementation of new functionality. I used the RSpec testing framework, with the Simplecov gem to monitor test
 coverage. Some tests written early on were later made redundant and hence removed from the test suite. In total I am
 making use of 46 tests, which give total coverage of 96%. I had difficulties unit testing recursion and so opted
 to implement a more feature-oriented test structure for some recursion-dependent functionality. I would love to learn
 more about effective testing of recursion!
+
+##### Part Two
+

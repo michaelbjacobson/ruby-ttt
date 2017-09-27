@@ -12,7 +12,7 @@ class Computer < Player
     true
   end
 
-  def choose_move(board)
+  def choose_move(board, ui)
     return opening_gambit(board).to_s if board.empty?
     select_best_space(board).to_s
   end
