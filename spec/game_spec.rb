@@ -1,1 +1,3 @@
-describe Game do; end
+describe Game do
+
+end
