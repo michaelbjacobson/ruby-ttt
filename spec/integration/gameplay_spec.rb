@@ -7,7 +7,7 @@ describe 'gameplay' do
     Game.play(input: input, output: output)
   end
 
-  context 'human vs. computer on a 3x3 grid' do
+  context 'play game' do
     it 'welcomes the player' do
       setup_test_run("1\nx\ny\ns\n8\n0\n2\n")
       expect(output.string).to include "Let's play Tic-Tac-Toe!"
@@ -54,6 +54,26 @@ describe 'gameplay' do
     it "informs the user that the computer is taking it's turn" do
       setup_test_run("1\nx\ny\ns\n8\n0\n2\n")
       expect(output.string).to include "Computer 'O' is taking it's turn..."
+    end
+
+    it 'informs the user if their choice is invalid' do
+      setup_test_run("1\nx\ny\ns\n10\n8\n0\n2\n")
+      expect(output.string).to include 'Please enter a number between 0 and 8.'
+    end
+
+    it 'informs the user if their chosen tile is already occupied' do
+      setup_test_run("1\nx\ny\ns\n8\n8\n0\n2\n")
+      expect(output.string).to include 'The tile you selected is not available. Please make another move!'
+    end
+
+    it 'informs the user if the game is tied' do
+      setup_test_run("3\ns\n")
+      expect(output.string).to include 'Tie game!'
+    end
+
+    it 'informs the user if the game is won' do
+      setup_test_run("1\nx\ny\ns\n8\n8\n0\n2\n")
+      expect(output.string).to include 'O wins!'
     end
   end
 end
