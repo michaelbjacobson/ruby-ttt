@@ -1,4 +1,4 @@
-describe '3x3 grid AI behaviour' do
+describe '3x3 grid AI behaviour', long: true do
 
   describe 'horizontal blocking' do
     context "AI's opponent has it's symbols in tiles 0 and 1" do

@@ -10,3 +10,8 @@ require_relative '../lib/game.rb'
 require_relative '../lib/human.rb'
 require_relative '../lib/player.rb'
 require_relative '../lib/ui.rb'
+
+RSpec.configure do |c|
+  # Uncomment the line directly below this one to include integration tests when running RSpec
+  # c.filter_run_excluding long: true
+end

@@ -1,5 +1,1 @@
-describe 'gameplay' do
-  context '' do
-
-  end
-end
+describe 'gameplay' do; end

@@ -1,4 +1,4 @@
-describe '4x4 grid AI behaviour' do
+describe '4x4 grid AI behaviour', long: true do
 
   describe 'horizontal blocking' do
     context "AI's opponent has it's symbols in tiles 0, 1 and 2" do
@@ -91,7 +91,7 @@ describe '4x4 grid AI behaviour' do
   end
 
   describe 'horizontal attacking' do
-    context "AI's has it's symbols in tiles 0, 1 and 2" do
+    context "AI has it's symbols in tiles 0, 1 and 2" do
       it 'secures a winning horizontal by playing to index 3' do
         board = Board.new(4)
         board.tiles[0] = 'O'
@@ -105,7 +105,7 @@ describe '4x4 grid AI behaviour' do
       end
     end
 
-    context "AI's has it's symbols in tiles 8, 10 and 11" do
+    context "AI has it's symbols in tiles 8, 10 and 11" do
       it 'secures a winning horizontal by playing to index 9' do
         board = Board.new(4)
         board.tiles[8] = 'O'
@@ -121,7 +121,7 @@ describe '4x4 grid AI behaviour' do
   end
 
   describe 'vertical attacking' do
-    context "AI's has it's symbols in tiles 1, 9 and 13" do
+    context "AI has it's symbols in tiles 1, 9 and 13" do
       it 'secures a winning vertical by playing to index 5' do
         board = Board.new(4)
         board.tiles[1] = 'O'
@@ -135,7 +135,7 @@ describe '4x4 grid AI behaviour' do
       end
     end
 
-    context "AI's has it's symbols in tiles 7, 11 and 15" do
+    context "AI has it's symbols in tiles 7, 11 and 15" do
       it 'secures a winning vertical by playing to index 3' do
         board = Board.new(4)
         board.tiles[7] = 'O'
@@ -151,7 +151,7 @@ describe '4x4 grid AI behaviour' do
   end
 
   describe 'diagonal attacking' do
-    context "AI's has it's symbols in tiles 0, 10 and 15" do
+    context "AI has it's symbols in tiles 0, 10 and 15" do
       it 'secures a winning vertical by playing to index 5' do
         board = Board.new(4)
         board.tiles[0] = 'O'
@@ -165,7 +165,7 @@ describe '4x4 grid AI behaviour' do
       end
     end
 
-    context "AI's has it's symbols in tiles 3, 6 and 9" do
+    context "AI has it's symbols in tiles 3, 6 and 9" do
       it 'secures a winning vertical by playing to index 12' do
         board = Board.new(4)
         board.tiles[3] = 'O'
