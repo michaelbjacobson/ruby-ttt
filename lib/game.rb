@@ -102,10 +102,14 @@ class Game
     @ui.out("\nThe tile you selected is not available. Please make another move!")
   end
 
-  def make_move
+  def make_move # TODO: refactor this method!
+    start_time = Time.now
     choice = active_player.choose_move(@board, @ui)
+    end_time = Time.now
+    delta = end_time - start_time
     adjusted_choice = active_player.ai? ? choice : (choice.to_i - 1).to_s
     if valid_choice?(adjusted_choice) && tile_is_free?(adjusted_choice)
+      interval(delta)
       @board.update(adjusted_choice)
     elsif !valid_choice?(adjusted_choice)
       print_invalid_choice_message
@@ -114,6 +118,12 @@ class Game
       print_tile_is_not_free
       make_move
     end
+  end
+
+  def interval(delta)
+    duration = 3
+    return unless active_player.ai? && $PROGRAM_NAME == __FILE__
+    sleep(delta > duration ? 0 : duration - delta)
   end
 
   def active_player
