@@ -7,7 +7,6 @@ class Player
 
   def initialize
     @symbol = nil
-    # @ui = UI.new
   end
 
   def ai?

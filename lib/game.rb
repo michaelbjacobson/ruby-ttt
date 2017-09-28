@@ -212,12 +212,12 @@ class Game
   end
 
   def tile(index)
-    tile = @board.tiles[index] =~ /[XO]/ ? @board.tiles[index].to_s : (index + 1).to_s
-    coloured_tile = colour_tile(tile, index)
-    add_spaces_to_tile(coloured_tile)
+    tile = @board.tiles[index] =~ /[xo]/i ? @board.tiles[index].to_s : (index + 1).to_s
+    spaced_tile = add_spaces_to_tile(tile)
+    add_colour_to_tile(spaced_tile, index)
   end
 
-  def colour_tile(tile, index)
+  def add_colour_to_tile(tile, index)
     if @board.won? && @board.winning_set.include?(index)
       tile.red
     elsif tile =~ /[xo]/i
