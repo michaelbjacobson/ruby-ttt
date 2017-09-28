@@ -3,7 +3,6 @@ require_relative './colouriser.rb'
 require_relative './computer.rb'
 require_relative './human.rb'
 require_relative './ui.rb'
-require 'benchmark'
 
 # This is the command line interface for the game
 class Game
@@ -127,7 +126,7 @@ class Game
   end
 
   def add_interval(delta)
-    duration = 3
+    duration = 2
     return unless active_player.ai? && $PROGRAM_NAME == __FILE__
     sleep(delta > duration ? 0 : duration - delta)
   end
