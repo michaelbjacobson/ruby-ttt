@@ -96,7 +96,7 @@ describe 'gameplay', slow: true do
 
       it 'displays the game board after the user plays their move. Tiles occupied with player symbols are wrapped in code to colour them cyan' do
         setup_test_run("1\nx\ny\ns\n9\n1\n3\n")
-        expect(output.string).to include "\n 1 | 2 | 3 \n---+---+---\n 4 | 5 | 6 \n---+---+---\n 7 | 8 | \e[36mX\e[0m \n"
+        expect(output.string).to include "\n 1 | 2 | 3 \n---+---+---\n 4 | 5 | 6 \n---+---+---\n 7 | 8 |\e[36m X\e[0m \n"
       end
     end
 
@@ -108,7 +108,7 @@ describe 'gameplay', slow: true do
 
       it 'displays the game board after the user plays their move. Tiles occupied with player symbols are wrapped in code to colour them cyan' do
         setup_test_run("1\nx\ny\nl\n16\n8\n9\n13\n")
-        expect(output.string).to include "  1 |  2 |  3 |  4 \n----+----+----+----\n  5 |  6 |  7 |  8 \n----+----+----+----\n  9 | 10 | 11 | 12 \n----+----+----+----\n 13 | 14 | 15 |  \e[36mX\e[0m \n"
+        expect(output.string).to include "  1 |  2 |  3 |  4 \n----+----+----+----\n  5 |  6 |  7 |  8 \n----+----+----+----\n  9 | 10 | 11 | 12 \n----+----+----+----\n 13 | 14 | 15 |\e[36m  X\e[0m \n"
       end
     end
   end
