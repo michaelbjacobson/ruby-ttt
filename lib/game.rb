@@ -211,24 +211,27 @@ class Game
     @display[index] = line
   end
 
-  def tile(index) # TODO: refactor this method!
+  def tile(index)
     tile = @board.tiles[index] =~ /[XO]/ ? @board.tiles[index].to_s : (index + 1).to_s
+    coloured_tile = colour_tile(tile, index)
+    add_spaces_to_tile(coloured_tile)
+  end
+
+  def colour_tile(tile, index)
+    if @board.won? && @board.winning_set.include?(index)
+      tile.red
+    elsif tile =~ /[xo]/i
+      tile.cyan
+    else
+      tile
+    end
+  end
+
+  def add_spaces_to_tile(tile)
     if @board.width == 3
-      if @board.won? && @board.winning_set.include?(index)
-        " #{tile.red}"
-      elsif tile =~ /[xo]/i
-        " #{tile.cyan}"
-      else
-        " #{tile}"
-      end
+      " #{tile}"
     elsif @board.width == 4
-      if @board.won? && @board.winning_set.include?(index)
-        tile.length > 1 ? " #{tile.red}" : "  #{tile.red}"
-      elsif tile =~ /[xo]/i
-        tile.length > 1 ? " #{tile.cyan}" : "  #{tile.cyan}"
-      else
-        tile.length > 1 ? " #{tile}" : "  #{tile}"
-      end
+      tile.length > 1 ? " #{tile}" : "  #{tile}"
     end
   end
 
