@@ -21,9 +21,22 @@ describe 'gameplay', slow: true do
       expect(output.string).to include '3 - The Unbeatable Tic-Tac-Toe Computer vs... itself.'
     end
 
+    it 're-prompts the player to select a valid game type if an invalid selection is made' do
+      setup_test_run("0\n1\nx\ny\ns\n9\n1\n3\n")
+      expect(output.string).to include 'Please select which game type you would like to play...'
+      expect(output.string).to include "1 - Human (that's you) vs. The Unbeatable Tic-Tac-Toe Computer."
+      expect(output.string).to include '2 - Human (you) vs. Another Human (maybe you, probably not though).'
+      expect(output.string).to include '3 - The Unbeatable Tic-Tac-Toe Computer vs... itself.'
+    end
+
     it "asks the player whether they'd like to play as 'X' or 'O'" do
       setup_test_run("1\nx\ny\ns\n9\n1\n3\n")
       expect(output.string).to include 'Which symbol would you like to play with? X or O?'
+    end
+
+    it 're-prompts the player to select a valid symbol if an invalid selection is made' do
+      setup_test_run("1\nz\nx\ny\ns\n9\n1\n3\n")
+      expect(output.string).to include "Please enter either 'X' or 'O'..."
     end
 
     it "asks the player whether or not they'd like to go first" do
@@ -31,37 +44,47 @@ describe 'gameplay', slow: true do
       expect(output.string).to include 'Would you like to go first? (Y)es or (N)o?'
     end
 
+    it 're-prompts the player to indicate whether or not they want to go first if an invalid selection is made' do
+      setup_test_run("1\nx\nz\ny\ns\n9\n1\n3\n")
+      expect(output.string).to include "Please enter 'y' (yes), or 'n' (no)..."
+    end
+
     it "asks the player whether they'd like to play on a standard (3x3) or large (4x4) game board" do
       setup_test_run("1\nx\ny\ns\n9\n1\n3\n")
       expect(output.string).to include 'Would you like to play on a (S)tandard board or a (L)arge one?'
     end
 
-    it "informs the user when it's their turn" do
+    it 're-prompts the player to select a valid board size if an invalid selection is made' do
+      setup_test_run("1\nx\ny\nz\ns\n9\n1\n3\n")
+      expect(output.string).to include "Please enter 's' (standard), or 'l' (large)..."
+    end
+
+    it "informs the player when it's their turn" do
       setup_test_run("1\nx\ny\ns\n9\n1\n3\n")
       expect(output.string).to include "Player 'X', you're up!"
     end
 
-    it "informs the user when the computer is taking it's turn" do
+    it "informs the player when the computer is taking it's turn" do
       setup_test_run("1\nx\ny\ns\n9\n1\n3\n")
       expect(output.string).to include "Computer 'O' is taking it's turn..."
     end
 
-    it 'informs the user if their choice is invalid' do
+    it 'informs the player if their choice is invalid' do
       setup_test_run("1\nx\ny\ns\n10\n9\n1\n3\n")
       expect(output.string).to include 'Please enter a number between 1 and 9.'
     end
 
-    it 'informs the user if their chosen tile is already occupied' do
+    it 'informs the player if their chosen tile is already occupied' do
       setup_test_run("1\nx\ny\ns\n9\n9\n1\n3\n")
       expect(output.string).to include 'The tile you selected is not available. Please make another move!'
     end
 
-    it 'informs the user if the game is tied' do
+    it 'informs the player if the game is tied' do
       setup_test_run("3\ns\n")
       expect(output.string).to include 'Tie game!'
     end
 
-    it 'informs the user if the game is won' do
+    it 'informs the player if the game is won' do
       setup_test_run("1\nx\ny\ns\n9\n1\n3\n")
       expect(output.string).to include 'O wins!'
     end
