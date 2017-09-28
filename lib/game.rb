@@ -95,7 +95,7 @@ class Game
   end
 
   def print_invalid_choice_message
-    @ui.out("\nPlease enter a number between 0 and #{((@board.width * @board.width) - 1)}.")
+    @ui.out("\nPlease enter a number between 1 and #{(@board.width * @board.width)}.")
   end
 
   def print_tile_is_not_free
@@ -104,12 +104,13 @@ class Game
 
   def make_move
     choice = active_player.choose_move(@board, @ui)
-    if valid_choice?(choice) && tile_is_free?(choice)
-      @board.update(choice)
-    elsif !valid_choice?(choice)
+    adjusted_choice = active_player.ai? ? choice : (choice.to_i - 1).to_s
+    if valid_choice?(adjusted_choice) && tile_is_free?(adjusted_choice)
+      @board.update(adjusted_choice)
+    elsif !valid_choice?(adjusted_choice)
       print_invalid_choice_message
       make_move
-    elsif !tile_is_free?(choice)
+    elsif !tile_is_free?(adjusted_choice)
       print_tile_is_not_free
       make_move
     end
@@ -195,7 +196,7 @@ class Game
   end
 
   def tile(index) # TODO: refactor this method!
-    tile = @board.tiles[index].to_s
+    tile = @board.tiles[index] =~ /[XO]/ ? @board.tiles[index].to_s : (index + 1).to_s
     if @board.width == 3
       if @board.won? && @board.winning_set.include?(index)
         " #{tile.red}"

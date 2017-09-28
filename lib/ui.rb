@@ -1,3 +1,4 @@
+# User interface class for input and output
 class UI
   def initialize(input = $stdin, output = $stdout)
     @input = input

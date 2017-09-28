@@ -12,6 +12,6 @@ require_relative '../lib/player.rb'
 require_relative '../lib/ui.rb'
 
 RSpec.configure do |c|
-  # Comment out the line directly below this one to include integration tests when running RSpec
+  # Comment out the line below to include the (slow) integration tests when running RSpec
   # c.filter_run_excluding slow: true
 end
