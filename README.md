@@ -10,7 +10,7 @@ UNIX terminal.
 Anyone who enjoys playing Tic-Tac-Toe! The game supports either one or two players, depending on
 the selected game mode.
 
-#### Ace! How can I play it it?
+#### Ace! How can I play it?
 Good question. Just follow these simple steps:
 1. Clone [this](https://github.com/michaelbjacobson/tic-tac-toe.git) GitHub repo onto your machine
 2. Using your terminal, navigate into the main Tic-Tac-Toe directory eg. `$ cd ~/tic-tac-toe`
@@ -21,8 +21,29 @@ Good question. Just follow these simple steps:
 into your terminal.
 
 #### Great, is there anything else I should know?
-Yes. The computer player is _unbeatable_. I'm not kidding, it literally can't be beaten. If you
+Yes. The computer player is __unbeatable__. I'm not kidding, it literally can't be beaten. If you
 play against the computer you'll either draw or lose. If you don't believe me, give it a try. I dare you.
+
+#
+
+### Testing
+
+#### How do I run the tests?
+1. First things first, go ahead and clone the repo onto your local machine and bundle the dependencies (steps 1 
+through 3 in the _'How can I play it?'_ sub-section of the _'Getting Started'_ section, above).
+2. Next, ensure that you are in the main Tic-Tac-Toe directory. If in doubt, you can easily check which directory you're in by
+entering the following in your terminal: `$ pwd`.
+3. Enter the `$ rspec` command into your terminal.
+4. Watch all the tests pass!
+
+#### Anything else I should know about these tests?
+Yup. There are 47 integration tests, some of which are *very* slow. These tests are enabled by default but can easily
+be disabled thus:
+1. Navigate to the spec directory, located inside the main Tic-Tac-Toe directory.
+2. Open the spec_helper.rb file in your favourite text editor, eg. `$ vim spec_helper.rb`.
+3. Uncomment line 16 of this file (comment it out again to re-enable the integration tests).
+4. Save the change and close the file.
+5. Run the tests! (See _'How do I run the tests?'_ above).
 
 #
 
