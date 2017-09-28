@@ -23,10 +23,9 @@ describe 'gameplay', slow: true do
 
     it 're-prompts the player to select a valid game type if an invalid selection is made' do
       setup_test_run("0\n1\nx\ny\ns\n9\n1\n3\n")
-      expect(output.string).to include 'Please select which game type you would like to play...'
-      expect(output.string).to include "1 - Human (that's you) vs. The Unbeatable Tic-Tac-Toe Computer."
-      expect(output.string).to include '2 - Human (you) vs. Another Human (maybe you, probably not though).'
-      expect(output.string).to include '3 - The Unbeatable Tic-Tac-Toe Computer vs... itself.'
+      count = output.string.scan(/Please select which game type you would like to play/).size
+      expect(output.string).to include 'Please select which game type you would like to play'
+      expect(count).to eq 2
     end
 
     it "asks the player whether they'd like to play as 'X' or 'O'" do

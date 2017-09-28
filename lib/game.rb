@@ -3,10 +3,13 @@ require_relative './colouriser.rb'
 require_relative './computer.rb'
 require_relative './human.rb'
 require_relative './ui.rb'
+require 'benchmark'
 
 # This is the command line interface for the game
 class Game
   attr_accessor :players, :board
+
+  INDEX_OFFSET = 1
 
   def initialize(input, output)
     @ui = UI.new(input, output)
@@ -87,40 +90,43 @@ class Game
   end
 
   def valid_choice?(tile)
-    tile =~ /^[0-9]*$/ && tile.to_i >= 0 && tile.to_i < (@board.width * @board.width)
+    tile.to_i >= 0 && tile.to_i < (@board.width * @board.width)
   end
 
   def tile_is_free?(tile)
     @board.tiles[tile.to_i] !~ /[xo]/i
   end
 
-  def print_invalid_choice_message
-    @ui.out("\nPlease enter a number between 1 and #{(@board.width * @board.width)}.")
+  def print_invalid_choice_message(choice)
+    if valid_choice?(choice)
+      @ui.out("\nThe tile you selected is not available. Please make another move!")
+    else
+      @ui.out("\nPlease enter a number between 1 and #{(@board.width * @board.width)}.")
+    end
   end
 
-  def print_tile_is_not_free
-    @ui.out("\nThe tile you selected is not available. Please make another move!")
-  end
-
-  def make_move # TODO: refactor this method!
+  def make_move
     start_time = Time.now
     choice = active_player.choose_move(@board, @ui)
     end_time = Time.now
-    delta = end_time - start_time
-    adjusted_choice = active_player.ai? ? choice : (choice.to_i - 1).to_s
-    if valid_choice?(adjusted_choice) && tile_is_free?(adjusted_choice)
-      interval(delta)
-      @board.update(adjusted_choice)
-    elsif !valid_choice?(adjusted_choice)
-      print_invalid_choice_message
-      make_move
-    elsif !tile_is_free?(adjusted_choice)
-      print_tile_is_not_free
+    if valid_choice?(adjust(choice)) && tile_is_free?(adjust(choice))
+      add_interval(delta(end_time, start_time))
+      @board.update(adjust(choice))
+    else
+      print_invalid_choice_message(adjust(choice))
       make_move
     end
   end
 
-  def interval(delta)
+  def delta(start_time, end_time)
+    end_time - start_time
+  end
+
+  def adjust(choice)
+    active_player.ai? ? choice : (choice.to_i - INDEX_OFFSET).to_s
+  end
+
+  def add_interval(delta)
     duration = 3
     return unless active_player.ai? && $PROGRAM_NAME == __FILE__
     sleep(delta > duration ? 0 : duration - delta)
