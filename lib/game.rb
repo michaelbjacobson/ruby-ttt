@@ -217,7 +217,7 @@ class Game
   end
 
   def clear_display
-    system 'clear'
+    system 'clear' if $PROGRAM_NAME == __FILE__ && ENV['TERM']
   end
 
 end
