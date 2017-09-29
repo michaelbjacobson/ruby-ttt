@@ -12,11 +12,12 @@ class Config
   end
 
   def self.from_file(path)
-    settings = Hash[File.read(path).split("\n").map { |l| l.split('=') } ]
-    ENV['UNIT_TESTS'] = settings['unit_tests']
-    ENV['INTEGRATION_TESTS'] = settings['integration_tests']
-    ENV['COMPUTER_MOVE_DELAY'] = settings['computer_move_delay']
-    ENV['COMPUTER_EVALUATION_DEPTH'] = settings['computer_evaluation_depth']
+    file_contents = File.read(path).strip
+    settings = Hash[file_contents.split("\n").map { |line| line.split('=') if line.include? '=' }]
+    ENV['UNIT_TESTS'] = settings['unit_tests'] =~ /(enabled|disabled)/i ? settings['unit_tests'].downcase : 'enabled'
+    ENV['INTEGRATION_TESTS'] = settings['integration_tests'] =~ /(enabled|disabled)/i ? settings['integration_tests'].downcase : 'enabled'
+    ENV['COMPUTER_MOVE_DELAY'] = settings['computer_move_delay'].to_i > 0 ? settings['computer_move_delay'] : '2'
+    ENV['COMPUTER_EVALUATION_DEPTH'] = settings['computer_evaluation_depth'].to_i > 0 ? settings['computer_evaluation_depth'] : '5'
   end
 
   def self.defaults

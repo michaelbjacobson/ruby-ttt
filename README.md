@@ -24,6 +24,11 @@ into your terminal.
 Yes. The computer player is __unbeatable__. I'm not kidding, it literally can't be beaten. If you
 play against the computer you'll either draw or lose. If you don't believe me, give it a try. I dare you.
 
+Also, you may have noticed a file called 'config', inside the main Tic-Tac-Toe directory. This file allows you to
+quickly and easily make certain changes, before runtime, to the way the program operates. Feel free to experiment with
+different settings, though do bear in mind that if either of the test options aren't set to 'enabled' or 'disabled',
+they will be overriden by default settings. Ditto if the computer options are set below 0.
+
 #
 
 ### Testing
