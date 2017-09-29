@@ -27,7 +27,9 @@ play against the computer you'll either draw or lose. If you don't believe me, g
 Also, you may have noticed a file called 'config', inside the main Tic-Tac-Toe directory. This file allows you to
 quickly and easily make certain changes, before runtime, to the way the program operates. Feel free to experiment with
 different settings, though do bear in mind that if either of the test options aren't set to 'enabled' or 'disabled',
-they will be overriden by default settings. Ditto if the computer options are set below 0.
+they will be overridden by default settings. Ditto if the computer options are set below 0. 
+
+It's interesting to see at what level of move evaluation the computer player stops being infallible!
 
 #
 
@@ -58,7 +60,7 @@ be disabled thus:
 I began by dissecting and refactoring the original codebase. The very first step of this was tweaking the original
 script to make it compliant with the [Ruby Style Guide](https://github.com/bbatsov/ruby-style-guide). Next I
 trimmed out a lot of redundant code in several methods. Finally I extracted several classes from the one existing
-'God' class, in adherance with the single responsiblity principle.
+'God' class, in adherence with the single responsibility principle.
 
 Then I tackled the specific issues highlighted in the problem brief. I decided to begin by ensuring that the computer
 player would be unbeatable. I did some research and decided that using the minimax algorithm would be the optimal
@@ -88,4 +90,35 @@ more about effective testing of recursion!
 
 #### Part Two
 
+For the second part of this project, I was tasked with adding the functionality for games to be played on a 4x4 grid
+instead of the usual 3x3 one.
 
+Initially simply added the ability for the computer to assess a 4x4 board. I was hardly expected to discover that, 
+using my existing algorithm, it took the computer several hours to work out it's first move! I then did a lot of
+studying eg. watching lectures online, reading blog posts/articles and also dipping into some books. Based on my
+research I decided to try two ways to speed up my computer player: alpha-beta pruning, and transposition tables.
+
+After finding little success with my, albeit very crudely built, transposition table, I decided that alpha-beta pruning
+was the way to go. I also discovered that implementing alpha-beta pruning is considerably less fiddly when added to
+a negamax, as opposed to a minimax, algorithm. After some extensive spiking, and more reading etc, I managed to get my
+computer playing the same perfect games much, _much_ faster by using said negamax algorithm with alpha-beta pruning.
+While I did find some interesting articles online I mostly based my new algorithm on the pseudocode found 
+[here](https://en.wikipedia.org/wiki/Negamax).
+
+Once I was happy with the performance of my computer player on a 4x4 grid, I set about overhauling my entire test suite,
+especially the integration tests and AI behaviour/performance tests.
+
+Based off feedback from players, I changed the user interface somewhat, removing the two grids and using only one. In
+order to make it clearer which tiles contained user symbols and which simply their own index, I decided to extend my
+colour functionality to all user moves, not just the winning row. I also changed the lowest number on the grid to 1, 
+instead of 0, as per other user feedback. Based on several other players's feedback, I decided to clear the display
+after the setup and after each move, to make it clearer what change had taken place since the previous turn. 
+
+After squashing a few more miscellaneous bugs, I decided to add a config file to make it simpler for less technical
+users to modify the program before. The config file is evaluated when the program or the test suite is run and
+environment variables are set according to it. While this wasn't explicitly requested in the brief, I felt that it, like
+the coloured symbols, fell within the realm of improving the user experience.
+
+All in all, I'm very pleased with the game in it's current form, but am looking forward to improving it further!
+
+Click [here](https://www.youtube.com/watch?v=b5L-cKN1mMA&feature=youtu.be) to see a demonstration of the game being installed and played on my Raspberry Pi 3! 
