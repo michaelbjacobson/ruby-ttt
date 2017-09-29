@@ -3,6 +3,7 @@ require_relative './colouriser.rb'
 require_relative './computer.rb'
 require_relative './human.rb'
 require_relative './ui.rb'
+require_relative './config.rb'
 
 # This is the command line interface for the game
 class Game
@@ -12,6 +13,7 @@ class Game
 
   def initialize(input, output)
     @ui = UI.new(input, output)
+    Config.set
   end
 
   def self.play(input: $stdin, output: $stdout)
@@ -126,7 +128,7 @@ class Game
   end
 
   def add_interval(delta)
-    duration = 2
+    duration = ENV['COMPUTER_MOVE_DELAY'].to_i
     return unless active_player.ai? && $PROGRAM_NAME == __FILE__
     sleep(delta > duration ? 0 : duration - delta)
   end

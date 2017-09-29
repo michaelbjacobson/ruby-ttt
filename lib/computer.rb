@@ -5,8 +5,11 @@ class Computer < Player
   attr_reader :symbol
 
   MINIMUM_DEPTH = 0
-  MAXIMUM_DEPTH = 5
   MAXIMUM_SCORE = 1000
+
+  def initialize
+    @maximum_depth = ENV['COMPUTER_EVALUATION_DEPTH'].to_i
+  end
 
   def ai?
     true
@@ -25,7 +28,7 @@ class Computer < Player
     0
   end
 
-  def negamax(board, depth = MINIMUM_DEPTH, alpha = -MAXIMUM_SCORE, beta = MAXIMUM_SCORE, color = 1, max_depth = MAXIMUM_DEPTH)
+  def negamax(board, depth = MINIMUM_DEPTH, alpha = -MAXIMUM_SCORE, beta = MAXIMUM_SCORE, color = 1, max_depth = @maximum_depth)
     return color * heuristic_value(board, depth) if board.over? || depth > max_depth
 
     max = -MAXIMUM_SCORE

@@ -1,4 +1,4 @@
-describe Board do
+describe Board, fast: true do
 
   describe '#available_tiles' do # it returns an array containing the indices of all available tiles on the board
     context 'all tiles are available' do

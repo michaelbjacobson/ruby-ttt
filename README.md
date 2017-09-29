@@ -51,7 +51,7 @@ be disabled thus:
 
 #### Part One
 I began by dissecting and refactoring the original codebase. The very first step of this was tweaking the original
-script to make it fully compliant with the [Ruby Style Guide](https://github.com/bbatsov/ruby-style-guide). Next I
+script to make it compliant with the [Ruby Style Guide](https://github.com/bbatsov/ruby-style-guide). Next I
 trimmed out a lot of redundant code in several methods. Finally I extracted several classes from the one existing
 'God' class, in adherance with the single responsiblity principle.
 
@@ -82,4 +82,5 @@ to implement a more feature-oriented test structure for some recursion-dependent
 more about effective testing of recursion!
 
 #### Part Two
+
 

@@ -1,4 +1,4 @@
-describe String do
+describe String, fast: true do
 
   it 'has new methods: #red and #cyan' do
     expect(subject).to respond_to(:red)

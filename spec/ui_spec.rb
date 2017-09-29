@@ -1,4 +1,4 @@
-describe UI do
+describe UI, fast: true do
 
   describe '#out' do
     it 'is given a string as a argument and displays it via the specified output stream, which is $stdout by default' do

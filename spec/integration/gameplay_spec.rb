@@ -7,7 +7,7 @@ describe 'gameplay', slow: true do
     Game.play(input: input, output: output)
   end
 
-  describe 'play game' do
+  describe 'command line user interface' do
     it 'welcomes the player' do
       setup_test_run("1\nx\ny\ns\n9\n1\n3\n")
       expect(output.string).to include "Let's play Tic-Tac-Toe!"

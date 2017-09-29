@@ -1,4 +1,4 @@
-describe Computer do
+describe Computer, fast: true do
 
   describe '#ai?' do
     it 'returns true' do
