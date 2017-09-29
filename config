@@ -1,4 +1,4 @@
-unit_tests=disabled
-integration_tests=disabled
+unit_tests=enabled
+integration_tests=enabled
 computer_move_delay=2
 computer_evaluation_depth=5

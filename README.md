@@ -39,10 +39,10 @@ entering the following in your terminal: `$ pwd`.
 #### Anything else I should know about these tests?
 Yup. There are 47 integration tests, some of which are *very* slow. These tests are enabled by default but can easily
 be disabled thus:
-1. Navigate to the spec directory, located inside the main Tic-Tac-Toe directory.
-2. Open the spec_helper.rb file in your favourite text editor, eg. `$ vim spec_helper.rb`.
-3. Uncomment line 16 of this file (comment it out again to re-enable the integration tests).
-4. Save the change and close the file.
+1. Navigate into the main Tic-Tac-Toe directory, if you aren't already there.
+2. Open the 'config' file, contained therein, using your favourite text editor, eg. `$ vim config`.
+3. Find the line that says 'integration_tests' and change 'enabled' to 'disabled'.
+4. Save the change, and close the file.
 5. Run the tests! (See _'How do I run the tests?'_ above).
 
 #
