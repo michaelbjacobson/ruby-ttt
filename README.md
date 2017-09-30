@@ -121,4 +121,4 @@ the coloured symbols, fell within the realm of improving the user experience.
 
 All in all, I'm very pleased with the game in it's current form, but am looking forward to improving it further!
 
-Click [here](https://www.youtube.com/watch?v=b5L-cKN1mMA&feature=youtu.be) to see a demonstration of the game being installed and played on my Raspberry Pi 3! 
+### Click [here](https://www.youtube.com/watch?v=b5L-cKN1mMA&feature=youtu.be) to see a demonstration of the game being installed and played on my Raspberry Pi 3! 
