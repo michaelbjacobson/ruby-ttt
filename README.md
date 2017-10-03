@@ -115,7 +115,7 @@ instead of 0, as per other user feedback. Based on several other players's feedb
 after the setup and after each move, to make it clearer what change had taken place since the previous turn. 
 
 After squashing a few more miscellaneous bugs, I decided to add a config file to make it simpler for less technical
-users to modify the program before. The config file is evaluated when the program or the test suite is run and
+users to modify the program before runtime. The config file is evaluated when the program or the test suite is run and
 environment variables are set according to it. While this wasn't explicitly requested in the brief, I felt that it, like
 the coloured symbols, fell within the realm of improving the user experience.
 
