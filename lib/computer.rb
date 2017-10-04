@@ -55,5 +55,4 @@ class Computer < Player
     negamax(board)
     @best_score.max_by { |key, value| value }[0]
   end
-
 end

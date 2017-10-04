@@ -109,5 +109,4 @@ class Board
     winning_diagonals.each { |diagonal| winning_indices << diagonal }
     winning_indices
   end
-
 end
