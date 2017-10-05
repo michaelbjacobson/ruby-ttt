@@ -144,7 +144,7 @@ class Game
   def select_player_symbols
     @ui.out("\nWhich symbol would you like to play with? X or O?")
     choice = @ui.in
-    if choice =~ /[xo]/i
+    if choice =~ /[xo]/i && choice.length == 1
       @players.first.symbol = choice.upcase
       @players.last.symbol = 'XO'.delete!(choice.upcase)
     else
