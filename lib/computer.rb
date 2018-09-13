@@ -15,8 +15,9 @@ class Computer < Player
     true
   end
 
-  def choose_move(board, ui)
+  def choose_move(board, _ui)
     return opening_gambit(board).to_s if board.empty?
+
     select_best_space(board).to_s
   end
 
@@ -24,6 +25,7 @@ class Computer < Player
 
   def heuristic_value(board, depth)
     return MAXIMUM_SCORE / depth if board.won?(symbol)
+
     return -MAXIMUM_SCORE / depth if board.lost?(symbol)
     0
   end
@@ -53,6 +55,6 @@ class Computer < Player
   def select_best_space(board)
     @best_score = {}
     negamax(board)
-    @best_score.max_by { |key, value| value }[0]
+    @best_score.max_by { |_key, value| value }[0]
   end
 end
